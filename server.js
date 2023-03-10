@@ -41,11 +41,12 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler)
 
-mongoose.connections.once('open', () => {
-    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB')
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 })
 
-mongoose.connections.on('error', err => {
+mongoose.connection.on('error', err => {
     console.log(err)
     logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
 })
